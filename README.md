@@ -90,7 +90,7 @@ source .venv/bin/activate
 python3 -m pip install --upgrade -r requirements_long_work_translator_html.txt
 ```
 
-## Common mistake: `Invalid requirement: '\"\"\"'`
+## Common mistake: `Invalid requirement: '"""'`
 
 This happens when the Python script is mistakenly passed to `pip` as a
 requirements file:
