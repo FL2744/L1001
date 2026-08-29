@@ -17,9 +17,8 @@ By default, the script reads OPENAI_API_KEY from ~/.env or the environment.
 
 HOW TO RUN (macOS / Linux Terminal)
 -----------------------------------
-First-time setup:
+First-time setup, in your project directory:
 
-    cd /Users/will/VIBES/L1001
     python3 -m venv .venv
     source .venv/bin/activate
     python3 -m pip install --upgrade pip
@@ -37,9 +36,8 @@ Then run:
 
     python3 L1001.py
 
-On later runs, the packages normally do not need to be installed again:
+On later runs, the packages normally do not need to be installed again. From your project directory:
 
-    cd /Users/will/VIBES/L1001
     source .venv/bin/activate
     python3 L1001.py
 
