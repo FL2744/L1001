@@ -1,4 +1,4 @@
-# L1001 Long-Work HTML Translator
+# L1001 Translator
 
 `L1001.py` translates long `.txt`, `.md`, `.markdown`, or `.docx` works and
 produces a standalone HTML document. It processes the source in chunks, keeps
