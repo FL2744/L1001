@@ -1,4 +1,4 @@
-# L1001 Long-Work HTML Translator
+# L1001 Translator
 
 `L1001.py` translates long `.txt`, `.md`, `.markdown`, or `.docx` works and
 produces a standalone HTML document. It processes the source in chunks, keeps
@@ -7,10 +7,9 @@ saves checkpoints so interrupted translations can be resumed.
 
 ## First-time setup on macOS
 
-Open Terminal and run these commands one at a time:
+Open Terminal and run these commands in the project directory one at a time:
 
 ```bash
-cd /Users/will/VIBES/L1001
 python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install --upgrade pip
@@ -32,7 +31,7 @@ Alternatively, set the key for the current Terminal window:
 export OPENAI_API_KEY="your-api-key-here"
 ```
 
-Or save it in a file named `.env` in your home directory (`/Users/will/.env`):
+Or save it in a file named `.env` in your home directory:
 
 ```text
 OPENAI_API_KEY=your-api-key-here
@@ -64,10 +63,9 @@ same command again and accept the resume option when prompted.
 
 ## Normal use after the first setup
 
-For each new Terminal session:
+For each new Terminal session, in your project directory:
 
 ```bash
-cd /Users/will/VIBES/L1001
 source .venv/bin/activate
 python3 L1001.py
 ```
@@ -85,10 +83,9 @@ deactivate
 ## Updating dependencies
 
 If the script later reports a missing or outdated package, activate the virtual
-environment and reinstall the requirements:
+environment and reinstall the requirements in your project directory:
 
 ```bash
-cd /Users/will/VIBES/L1001
 source .venv/bin/activate
 python3 -m pip install --upgrade -r requirements_long_work_translator_html.txt
 ```
