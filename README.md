@@ -32,7 +32,7 @@ At startup, the program offers two provider choices:
 
 To create an ARC key, sign in at <https://llm.arc.vt.edu/> and open
 **User profile > Settings > Account > API keys**. ARC access is available to
-Virginia Tech students, faculty, and staff.
+Virginia Tech students, faculty, and staff. If you are off-campus and not on a Virginia Tech network, you will need to use the Cisco Secure Client VPN. Instructions here: `https://www.nis.vt.edu/ServicePortfolio/Network/RemoteAccess-VPN.html`
 
 For either provider, key input is hidden. The script keeps the key only in
 memory for the current run; it does not print it, write it into the script, or
