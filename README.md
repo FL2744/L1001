@@ -1,3 +1,5 @@
+![L1001 logo](L1001-logo.png)
+
 # L1001 Translator
 
 `L1001.py` translates long `.txt`, `.md`, `.markdown`, or `.docx` works and
