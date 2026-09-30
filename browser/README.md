@@ -48,8 +48,8 @@ does not change the browser adapter; update the browser files as well.
 - Original seven styles, context, continuity, optional global entity endnotes.
 - ARC: https://llm-api.arc.vt.edu/api/v1/chat/completions, default gpt-oss-120b.
   The portal/key-management address is https://llm.arc.vt.edu.
-- OpenAI: https://api.openai.com/v1/responses, default gpt-5.4-nano retained from
-  L1001.py, JSON schema output and store:false. Model IDs are editable; access
+- OpenAI: https://api.openai.com/v1/responses, default gpt-6-luna,
+  JSON schema output and store:false. Model IDs are editable; access
   depends on the account. No reasoning-effort option is forced on custom models.
 - ARC uses streamed Chat Completions with a 30,000-token output budget, avoiding
   ARC’s 8,000-token non-streaming cap. The full ARC request (including queueing

@@ -5,7 +5,7 @@
   let connected=false, active=null, handshake='', ping, slow, recovery, checkpoint=null, htmlURL=null, checkpointURL=null;
   const status=text=>{$('status').textContent=text;};
   const send=m=>frame.contentWindow.postMessage({channel,...m},url.origin);
-  const modelDefaults={arc:'gpt-oss-120b',openai:'gpt-5.4-nano'};
+  const modelDefaults={arc:'gpt-oss-120b',openai:'gpt-6-luna'};
   const hasUnfinishedCheckpoint=()=>!!checkpoint && checkpoint.fragments.length<checkpoint.total;
   function controls() {
     $('run').disabled=!connected || !!active;
@@ -20,7 +20,7 @@
     $('api-key').placeholder='Enter your '+(arc?'ARC':'OpenAI')+' API key';
     $('key-help-open').hidden=!arc;
     $('provider-help').hidden=arc;
-    $('models').replaceChildren(...(arc?['gpt-oss-120b','DeepSeek-V4-Flash','GLM-5.2','Kimi-K3']:['gpt-5.4-nano']).map(value=>{const o=document.createElement('option');o.value=value;return o;}));
+    $('models').replaceChildren(...(arc?['gpt-oss-120b','DeepSeek-V4-Flash','GLM-5.2','Kimi-K3']:['gpt-6-luna']).map(value=>{const o=document.createElement('option');o.value=value;return o;}));
   }
   $('provider').addEventListener('change',()=>providerChanged());providerChanged(false);
 const keyHelpDialog = document.getElementById('key-help-dialog');
