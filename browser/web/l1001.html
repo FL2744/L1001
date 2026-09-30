@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>L1001 · Translation at Scale</title><link rel="stylesheet" href="l1001.css?v=20260930-key-help-spacing"><script src="l1001-config.js" defer></script><script src="l1001.js?v=20260930-key-help-spacing" defer></script></head>
+<title>L1001 · Translation at Scale</title><link rel="stylesheet" href="l1001.css?v=20260930-options-layout"><script src="l1001-config.js" defer></script><script src="l1001.js?v=20260930-options-layout" defer></script></head>
 <body><main>
 
 <form id="form"><div class="grid"><section aria-label="Translation settings"><header class="site-logo"><img id="banner" src="L1001-banner.png" alt="L1001 · Translation at Scale" hidden><h1 id="logo-fallback">L1001 <span>Translation at Scale</span></h1></header><fieldset id="settings"><legend class="sr-only">Translation settings</legend>
@@ -10,22 +10,24 @@
 <p class="help" id="provider-help" hidden>Use an <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">OpenAI Platform API key</a>. API usage is billed to your OpenAI account.</p>
 <label for="source">Source document</label><input id="source" type="file" accept=".txt,.docx,.rtf" required aria-describedby="file-help"><p id="file-help" class="help">Upload a .txt, .docx, or .rtf document. File size limit: 10 MB.</p>
 <div class="pair"><div><label for="source-language">Source language</label><input id="source-language" placeholder="e.g. French" required></div><div><label for="target-language">Target language</label><input id="target-language" value="English" required></div></div>
-<div class="pair"><div><label for="title">Work title</label><input id="title" placeholder="Title of the work"></div><div><label for="author">Author</label><input id="author" placeholder="Optional"></div></div>
 <label for="style">Translation style</label><select id="style"><option value="1">Literal</option><option value="2" selected>Faithful and balanced</option><option value="3">Domesticated</option><option value="4">Readable</option><option value="5">Accessible</option><option value="6">Literary</option><option value="7">Academic</option></select>
-<details><summary>Translation and annotation options</summary>
+</fieldset>
+<div class="actions"><button id="run" disabled>Translate</button><button id="stop" type="button" class="secondary" hidden>Stop</button></div>
+<p class="help privacy">If you are not connected to a Virginia Tech network, you will need to turn on the <a href="https://www.nis.vt.edu/ServicePortfolio/Network/RemoteAccess-VPN.html" target="_blank" rel="noopener noreferrer">Cisco Secure Client VPN</a> before using this tool. Your API key is used only while this page is open and is not saved to browser storage or included in your notebook. The code runs locally in your browser, so your work stays on your own computer.</p>
+<details id="translation-options"><summary>Translation and annotation options</summary>
+<fieldset id="advanced-settings"><legend class="sr-only">Translation and annotation options</legend>
+<div class="pair"><div><label for="title">Work title</label><input id="title" placeholder="Title of the work"></div><div><label for="author">Author</label><input id="author" placeholder="Optional"></div></div>
+
 <label for="source-details">Source context</label><textarea id="source-details" placeholder="Period, dialect, subject, or other source context"></textarea>
 <label for="target-details">Translation guidance</label><textarea id="target-details" placeholder="Audience, terminology, or target-language conventions"></textarea>
 <label for="chunk-chars">Maximum source characters per chunk</label><input id="chunk-chars" type="number" min="1000" max="16000" step="500" value="6000" required><p class="help">Paragraph-aware chunks, measured in characters rather than tokens. Smaller chunks help with model output limits.</p>
 <label class="check"><input id="annotations" type="checkbox"> Add linked entity endnotes</label>
 <label for="annotation-scope">What to annotate</label><textarea id="annotation-scope">Named people, places, organizations, works, events, objects, and concepts</textarea>
-<label for="annotation-guidance">Endnote guidance</label><textarea id="annotation-guidance">Use one to three concise sentences per annotation.</textarea></details>
-</fieldset>
-<div class="actions"><button id="run" disabled>Translate</button><button id="stop" type="button" class="secondary" hidden>Stop</button></div>
-<p class="help privacy">If you are not connected to a Virginia Tech network, you will need to turn on the <a href="https://www.nis.vt.edu/ServicePortfolio/Network/RemoteAccess-VPN.html" target="_blank" rel="noopener noreferrer">Cisco Secure Client VPN</a> before using this tool. Your API key is used only while this page is open and is not saved to browser storage or included in your notebook. The code runs locally in your browser, so your work stays on your own computer.</p>
+<label for="annotation-guidance">Endnote guidance</label><textarea id="annotation-guidance">Use one to three concise sentences per annotation.</textarea></fieldset></details>
+<details id="resume-details"><summary>Resume a saved translation</summary><label for="checkpoint">Upload a checkpoint</label><input id="checkpoint" type="file" accept=".json"><p id="checkpoint-help" class="help">A checkpoint restores the translation settings and completed chunks. Select the original source file and enter your API key again.</p><button id="clear-checkpoint" class="secondary" type="button" disabled>Clear checkpoint</button></details>
 </section><section class="results" aria-labelledby="results-title"><h2 id="results-title">Translation</h2><p id="result-summary">Upload a document and choose your languages to begin.</p>
 <iframe id="preview" title="Translated HTML preview" sandbox="" referrerpolicy="no-referrer" srcdoc="<!doctype html><html lang='en'><body style='font:16px/1.7 Helvetica,Arial,sans-serif;color:#60718a;padding:24px'>Your translated document will appear here.</body></html>"></iframe>
 <div class="actions downloads"><a id="download-html" aria-disabled="true">Download HTML</a><a id="download-checkpoint" aria-disabled="true">Download checkpoint</a></div>
-<details id="resume-details"><summary>Resume a saved translation</summary><label for="checkpoint">Upload a checkpoint</label><input id="checkpoint" type="file" accept=".json"><p id="checkpoint-help" class="help">A checkpoint restores the translation settings and completed chunks. Select the original source file and enter your API key again.</p><button id="clear-checkpoint" class="secondary" type="button" disabled>Clear checkpoint</button></details>
 </section></div></form>
 <p id="status" role="status">Connecting to JupyterLite…</p><button id="reconnect" type="button" class="secondary" hidden>Reconnect to JupyterLite</button>
 <details><summary>Notebook output</summary><pre id="log" tabindex="0" aria-label="Notebook output"></pre></details>

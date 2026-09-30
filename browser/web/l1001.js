@@ -9,7 +9,7 @@
   function controls() {
     $('run').disabled=!connected || !!active;
     $('run').textContent=checkpoint?'Resume translation':'Translate';
-    $('stop').hidden=!active;$('settings').disabled=!!active;
+    $('stop').hidden=!active;$('settings').disabled=!!active;$('advanced-settings').disabled=!!active;
     $('checkpoint').disabled=!!active;$('clear-checkpoint').disabled=!!active || !checkpoint;
   }
   function providerChanged(clear=true) {
