@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">L1001 course home</title>
+  <g fill="none" stroke="#182a43" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 54 64 19 106 54"/>
+    <path d="M32 48v40h64V48M54 88V65h20v23"/>
+  </g>
+  <text x="64" y="116" text-anchor="middle" fill="#182a43" font-family="Helvetica,Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="1">L1001</text>
+</svg>
