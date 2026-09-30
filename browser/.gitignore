@@ -1,0 +1,8 @@
+.venv/
+dist/
+.cache/
+__pycache__/
+*.pyc
+.doit.db*
+.jupyterlite.doit.db*
+tests/artifacts/

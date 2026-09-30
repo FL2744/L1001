@@ -7,6 +7,8 @@ produces a standalone HTML document. It processes the source in chunks, keeps
 continuity information between chunks, retries temporary API failures, and
 saves checkpoints so interrupted translations can be resumed.
 
+Web implementation here: [https://l1001.vt.domains/l1001.html](https://l1001.vt.domains/l1001.html)
+
 ## First-time setup on macOS
 
 Open Terminal and run these commands one at a time in your project directory:

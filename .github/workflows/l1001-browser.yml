@@ -1,0 +1,43 @@
+name: Deploy L1001 browser
+on:
+  push:
+    branches: [main]
+    paths: ['browser/**', '.github/workflows/l1001-browser.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: l1001-pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r browser/requirements.txt
+      - name: Build JupyterLite and bridge
+        working-directory: browser
+        run: |
+          jupyter lite build --contents content --output-dir dist
+          python bridge/install.py dist
+          cp web/* dist/
+          touch dist/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: browser/dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
