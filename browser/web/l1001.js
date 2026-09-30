@@ -23,7 +23,8 @@
   }
   $('provider').addEventListener('change',()=>providerChanged());providerChanged(false);
 const keyHelpDialog = document.getElementById('key-help-dialog');
-document.getElementById('key-help-open').addEventListener('click', () => {
+document.getElementById('key-help-open').addEventListener('click', event => {
+  event.preventDefault();
   keyHelpDialog.showModal();
   document.body.classList.add('key-help-open');
 });
