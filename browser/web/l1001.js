@@ -6,9 +6,10 @@
   const status=text=>{$('status').textContent=text;};
   const send=m=>frame.contentWindow.postMessage({channel,...m},url.origin);
   const modelDefaults={arc:'gpt-oss-120b',openai:'gpt-5.4-nano'};
+  const hasUnfinishedCheckpoint=()=>!!checkpoint && checkpoint.fragments.length<checkpoint.total;
   function controls() {
     $('run').disabled=!connected || !!active;
-    $('run').textContent=checkpoint?'Resume translation':'Translate';
+    $('run').textContent=hasUnfinishedCheckpoint()?'Resume translation':'Translate';
     $('stop').hidden=!active;$('settings').disabled=!!active;$('advanced-settings').disabled=!!active;
     $('checkpoint').disabled=!!active;$('clear-checkpoint').disabled=!!active || !checkpoint;
   }
@@ -130,10 +131,10 @@ document.getElementById('key-help-image').addEventListener('error', () => {
     try {
       let binary='';for(const b of new Uint8Array(await file.arrayBuffer()))binary+=String.fromCharCode(b);
       if(active!==id)return;
-      const inputs={file:{name:file.name,data:btoa(binary)},provider:$('provider').value,model:$('model').value.trim(),api_key:$('api-key').value.trim(),style:$('style').value,chunk_chars:Number($('chunk-chars').value),annotations:$('annotations').checked,annotation_scope:$('annotation-scope').value,annotation_guidance:$('annotation-guidance').value,checkpoint};
+      const inputs={file:{name:file.name,data:btoa(binary)},provider:$('provider').value,model:$('model').value.trim(),api_key:$('api-key').value.trim(),style:$('style').value,chunk_chars:Number($('chunk-chars').value),annotations:$('annotations').checked,annotation_scope:$('annotation-scope').value,annotation_guidance:$('annotation-guidance').value,checkpoint:hasUnfinishedCheckpoint()?checkpoint:null};
       for(const k of ['title','author','source_language','source_details','target_language','target_details'])inputs[k]=$(k.replaceAll('_','-')).value.trim();
       $('log').textContent='';
-      if(!checkpoint){if(htmlURL)URL.revokeObjectURL(htmlURL);htmlURL=null;$('download-html').removeAttribute('href');$('download-html').setAttribute('aria-disabled','true');$('preview').srcdoc='';$('result-summary').textContent='Preparing translation…';}
+      if(!inputs.checkpoint){if(htmlURL)URL.revokeObjectURL(htmlURL);htmlURL=null;$('download-html').removeAttribute('href');$('download-html').setAttribute('aria-disabled','true');$('preview').srcdoc='';$('result-summary').textContent='Preparing translation…';}
       send({type:'run',id,inputs});inputs.api_key='';
     } catch(e){active=null;controls();status('Could not read the source document: '+e.message);}
   });

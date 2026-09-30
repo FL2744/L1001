@@ -55,8 +55,9 @@ async def main():
   await downloaded.save_as(ROOT/'tested-output.html')
   content=(ROOT/'tested-output.html').read_text()
   assert '<!doctype html>' in content and 'endnote-1' in content and 'test-only-secret' not in content
-  await page.get_by_text('Resume a saved translation',exact=True).click()
-  await page.locator('#clear-checkpoint').click()
+  assert await page.locator('#run').inner_text()=='Translate'
+  # A completed checkpoint stays downloadable but must not be sent to a new run.
+  assert await page.locator('#download-checkpoint').get_attribute('href')
   await page.locator('#provider').select_option('openai')
   assert await page.locator('#api-key').input_value()==''
   await page.locator('#api-key').fill('test-openai-secret')
