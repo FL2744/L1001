@@ -12,3 +12,5 @@
 
 .course-home{display:block;flex:0 0 64px;border:1px solid #b6c4d6;border-radius:10px;padding:5px;line-height:0}.course-home:hover{background:#fff}.course-home img{display:block;width:52px;height:52px}
 main{position:relative}.course-home{position:absolute;top:40px;right:32px;width:64px;z-index:1}@media(max-width:750px){.course-home{top:34px;right:16px}.site-logo{padding-right:84px}}
+
+.translation-summary{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:14px 0}.translation-summary #result-summary{margin:0;min-width:0}#translation-progress{display:block;flex:0 0 auto;width:110px;max-width:28%;height:6px;margin:0;border:0;border-radius:3px;overflow:hidden;appearance:none;background:#dce3ed;accent-color:#2459c4}#translation-progress::-webkit-progress-bar{background:#dce3ed;border-radius:3px}#translation-progress::-webkit-progress-value{background:#2459c4;border-radius:3px}#translation-progress::-moz-progress-bar{background:#2459c4;border-radius:3px}

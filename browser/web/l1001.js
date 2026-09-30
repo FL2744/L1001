@@ -64,10 +64,12 @@ document.getElementById('key-help-image').addEventListener('error', () => {
   }
   function setCheckpoint(value) {
     checkpoint=value;
+    $('translation-progress').max=Math.max(1,value.total);
+    $('translation-progress').value=value.fragments.length;
     checkpointURL=blobLink('download-checkpoint',JSON.stringify(value,null,2),'application/json','L1001-checkpoint.json',checkpointURL);controls();
   }
   function clearCheckpoint() {
-    checkpoint=null;if(checkpointURL)URL.revokeObjectURL(checkpointURL);checkpointURL=null;
+    checkpoint=null;$('translation-progress').value=0;if(checkpointURL)URL.revokeObjectURL(checkpointURL);checkpointURL=null;
     $('download-checkpoint').removeAttribute('href');$('download-checkpoint').setAttribute('aria-disabled','true');
     $('checkpoint').value='';$('checkpoint-help').textContent='Choose the original source file and enter your API key to resume a checkpoint.';controls();
   }
@@ -134,7 +136,7 @@ document.getElementById('key-help-image').addEventListener('error', () => {
       const inputs={file:{name:file.name,data:btoa(binary)},provider:$('provider').value,model:$('model').value.trim(),api_key:$('api-key').value.trim(),style:$('style').value,chunk_chars:Number($('chunk-chars').value),annotations:$('annotations').checked,annotation_scope:$('annotation-scope').value,annotation_guidance:$('annotation-guidance').value,checkpoint:hasUnfinishedCheckpoint()?checkpoint:null};
       for(const k of ['title','author','source_language','source_details','target_language','target_details'])inputs[k]=$(k.replaceAll('_','-')).value.trim();
       $('log').textContent='';
-      if(!inputs.checkpoint){if(htmlURL)URL.revokeObjectURL(htmlURL);htmlURL=null;$('download-html').removeAttribute('href');$('download-html').setAttribute('aria-disabled','true');$('preview').srcdoc='';$('result-summary').textContent='Preparing translation…';}
+      if(!inputs.checkpoint){$('translation-progress').value=0;if(htmlURL)URL.revokeObjectURL(htmlURL);htmlURL=null;$('download-html').removeAttribute('href');$('download-html').setAttribute('aria-disabled','true');$('preview').srcdoc='';$('result-summary').textContent='Preparing translation…';}
       send({type:'run',id,inputs});inputs.api_key='';
     } catch(e){active=null;controls();status('Could not read the source document: '+e.message);}
   });
