@@ -114,7 +114,7 @@ document.getElementById('key-help-image').addEventListener('error', () => {
     }
     if(m.type==='done' || m.type==='error') {
       clearTimeout(recovery);active=null;controls();
-      status(m.type==='done'?'Translation complete. Download your HTML document.':'Error: '+m.error);
+      status(m.type==='done'?'Ready.':'Error: '+m.error);
       if(m.type==='error'){$('log').textContent+='\n'+m.error;$('reconnect').hidden=false;}
     }
   });

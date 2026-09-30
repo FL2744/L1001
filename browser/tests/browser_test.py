@@ -42,12 +42,12 @@ async def main():
   await page.locator('#annotations').check()
   await page.locator('#run').click()
   try:
-   await page.wait_for_function("/Translation complete|Error:/.test(document.getElementById('status').textContent)",timeout=240000)
+   await page.wait_for_function("/Ready\.|Error:/.test(document.getElementById('status').textContent)",timeout=240000)
   except Exception:
    print('STATUS',await page.locator('#status').inner_text(),flush=True);print('LOG',await page.locator('#log').inner_text(),flush=True);raise
   print('STATUS',await page.locator('#status').inner_text(),flush=True)
   print('LOG',await page.locator('#log').inner_text(),flush=True)
-  assert 'Translation complete' in await page.locator('#status').inner_text()
+  assert 'Ready.' == await page.locator('#status').inner_text()
   assert len(calls)==3
   assert "user_concurrent" in await page.locator("#log").text_content()
   async with page.expect_download() as result:await page.locator('#download-html').click()
@@ -62,8 +62,8 @@ async def main():
   assert await page.locator('#api-key').input_value()==''
   await page.locator('#api-key').fill('test-openai-secret')
   await page.locator('#run').click()
-  await page.wait_for_function("/Translation complete|Error:/.test(document.getElementById('status').textContent)",timeout=120000)
-  assert 'Translation complete' in await page.locator('#status').inner_text(), await page.locator('#status').inner_text()
+  await page.wait_for_function("/Ready\.|Error:/.test(document.getElementById('status').textContent)",timeout=120000)
+  assert 'Ready.' == await page.locator('#status').inner_text(), await page.locator('#status').inner_text()
   assert len(calls)==5 and calls[-1]['store']==False
   await page.frame_locator('#preview').locator('h1').wait_for(state='visible')
   assert 'Paris' in await page.frame_locator('#preview').locator('article').inner_text()
