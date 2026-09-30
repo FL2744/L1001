@@ -2,7 +2,7 @@
 
 # L1001: Translation at Scale
 
-`L1001.py` translates long `.txt`, `.md`, `.markdown`, or `.docx` works and
+`L1001.py` translates long `.txt`, `.rtf`, or `.docx` works and
 produces a standalone HTML document. It processes the source in chunks, keeps
 continuity information between chunks, retries temporary API failures, and
 saves checkpoints so interrupted translations can be resumed.
