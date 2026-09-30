@@ -14,6 +14,7 @@
 </fieldset>
 <div class="actions"><button id="run" disabled>Translate</button><button id="stop" type="button" class="secondary" hidden>Stop</button></div>
 <p class="help privacy">If you are not connected to a Virginia Tech network, you will need to turn on the <a href="https://www.nis.vt.edu/ServicePortfolio/Network/RemoteAccess-VPN.html" target="_blank" rel="noopener noreferrer">Cisco Secure Client VPN</a> before using this tool. Your API key is used only while this page is open and is not saved to browser storage or included in your notebook. The code runs locally in your browser, so your work stays on your own computer.</p>
+<p id="status" role="status">Connecting to JupyterLite…</p><button id="reconnect" type="button" class="secondary" hidden>Reconnect to JupyterLite</button>
 <details id="translation-options"><summary>Translation and annotation options</summary>
 <fieldset id="advanced-settings"><legend class="sr-only">Translation and annotation options</legend>
 <div class="pair"><div><label for="title">Work title</label><input id="title" placeholder="Title of the work"></div><div><label for="author">Author</label><input id="author" placeholder="Optional"></div></div>
@@ -29,7 +30,6 @@
 <iframe id="preview" title="Translated HTML preview" sandbox="" referrerpolicy="no-referrer" srcdoc="<!doctype html><html lang='en'><body style='font:16px/1.7 Helvetica,Arial,sans-serif;color:#60718a;padding:24px'>Your translated document will appear here.</body></html>"></iframe>
 <div class="actions downloads"><a id="download-html" aria-disabled="true">Download HTML</a><a id="download-checkpoint" aria-disabled="true">Download checkpoint</a></div>
 </section></div></form>
-<p id="status" role="status">Connecting to JupyterLite…</p><button id="reconnect" type="button" class="secondary" hidden>Reconnect to JupyterLite</button>
 <details><summary>Notebook output</summary><pre id="log" tabindex="0" aria-label="Notebook output"></pre></details>
 <details><summary>Advanced: Show JupyterLite</summary><p class="help">The notebook runs in a temporary Python session. Inputs and API keys are not saved in notebook cells.</p><div class="jupyter-window"><iframe id="jupyter" title="JupyterLite workspace" allow="cross-origin-isolated"></iframe></div><p><a href="https://github.com/FL2744/L1001" target="_blank" rel="noopener noreferrer">Notebook and source on GitHub</a></p></details>
 <noscript>Enable JavaScript to use L1001.</noscript></main><dialog id="key-help-dialog" aria-labelledby="key-help-title">
