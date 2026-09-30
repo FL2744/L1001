@@ -122,6 +122,19 @@ TRANSLATION REQUIREMENTS
    or repeat the previous context in the current output.
 7. Use spellings from the ENTITY SPELLING GLOSSARY when the same entity reappears.
 8. Write the translation and all entity notes in the requested target language.
+9. Translate all front matter and title-page text, including the work title,
+   subtitles, headings, captions, edition statements, illustration counts,
+   publication details, and author or translator credits. Uppercase text,
+   isolated lines, and bibliographic formatting are not exemptions from translation.
+10. Preserve personal names and publisher or printer names. Use established
+    target-language forms of place names and work titles where appropriate;
+    translate the descriptive words around names rather than copying whole lines.
+11. Read credits across line breaks as complete phrases. Translate statements
+    such as "translated into [language] by [name]" idiomatically and preserve
+    the historical language named in the credit. That language describes the
+    source edition; it does not change the requested target language.
+12. Preserve title-page layout, emphasis, dates, and separators where practical,
+    but preserve formatting without leaving ordinary source-language text untranslated.
 
 HTML REQUIREMENTS
 1. Return translated_html as a semantic HTML fragment, not as Markdown and not as
