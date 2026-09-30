@@ -44,12 +44,12 @@ document.getElementById('key-help-image').addEventListener('error', () => {
   const banner=$('banner');
   function showBanner(){if(banner.naturalWidth){banner.hidden=false;$('logo-fallback').hidden=true;}}
   banner.addEventListener('load',showBanner);showBanner();
-  // Align the preview's top border with the provider/model fields on desktop.
+  // Align the Translation heading with the provider/model labels on desktop.
   const resultsColumn=document.querySelector('.results');
   function alignTranslationPanel() {
     if(window.innerWidth<=750){resultsColumn.style.paddingTop='';return;}
     const current=parseFloat(getComputedStyle(resultsColumn).paddingTop)||0;
-    const offset=$('model').getBoundingClientRect().top-$('preview').getBoundingClientRect().top;
+    const offset=document.querySelector('label[for="provider"]').getBoundingClientRect().top-$('results-title').getBoundingClientRect().top;
     resultsColumn.style.paddingTop=Math.max(0,current+offset)+'px';
   }
   const panelAlignment=new ResizeObserver(alignTranslationPanel);
