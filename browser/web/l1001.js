@@ -44,6 +44,18 @@ document.getElementById('key-help-image').addEventListener('error', () => {
   const banner=$('banner');
   function showBanner(){if(banner.naturalWidth){banner.hidden=false;$('logo-fallback').hidden=true;}}
   banner.addEventListener('load',showBanner);showBanner();
+  // Align the preview's top border with the provider/model fields on desktop.
+  const resultsColumn=document.querySelector('.results');
+  function alignTranslationPanel() {
+    if(window.innerWidth<=750){resultsColumn.style.paddingTop='';return;}
+    const current=parseFloat(getComputedStyle(resultsColumn).paddingTop)||0;
+    const offset=$('model').getBoundingClientRect().top-$('preview').getBoundingClientRect().top;
+    resultsColumn.style.paddingTop=Math.max(0,current+offset)+'px';
+  }
+  const panelAlignment=new ResizeObserver(alignTranslationPanel);
+  for(const element of [document.querySelector('.site-logo'),$('results-title'),$('result-summary')])panelAlignment.observe(element);
+  window.addEventListener('resize',alignTranslationPanel);
+  alignTranslationPanel();
   function blobLink(id,text,type,name,old) {
     if(old)URL.revokeObjectURL(old);
     const next=URL.createObjectURL(new Blob([text],{type}));
