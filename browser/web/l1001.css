@@ -5,3 +5,5 @@
 #key-help-dialog::backdrop{background:rgb(12 23 40 / 70%)}
 .key-help-header{display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:-20px;background:white;padding:12px 0;z-index:1}.key-help-header h2{margin:0}.key-help-header button{margin:0;white-space:nowrap}
 #key-help-image{display:block;width:100%;height:auto}body.key-help-open{overflow:hidden}
+
+@media(min-width:751px){.results{padding-top:16px}}

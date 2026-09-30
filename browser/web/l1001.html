@@ -2,8 +2,8 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>L1001 · Translation at Scale</title><link rel="stylesheet" href="l1001.css"><script src="l1001-config.js" defer></script><script src="l1001.js" defer></script></head>
 <body><main>
-<header class="site-logo"><img id="banner" src="L1001-banner.png" alt="L1001 · Translation at Scale" hidden><h1 id="logo-fallback">L1001 <span>Translation at Scale</span></h1></header>
-<form id="form"><div class="grid"><section aria-label="Translation settings"><fieldset id="settings"><legend class="sr-only">Translation settings</legend>
+
+<form id="form"><div class="grid"><section aria-label="Translation settings"><header class="site-logo"><img id="banner" src="L1001-banner.png" alt="L1001 · Translation at Scale" hidden><h1 id="logo-fallback">L1001 <span>Translation at Scale</span></h1></header><fieldset id="settings"><legend class="sr-only">Translation settings</legend>
 <div class="pair"><div><label for="provider">AI provider</label><select id="provider"><option value="arc">Virginia Tech ARC</option><option value="openai">OpenAI</option></select></div><div><label for="model">Model</label><input id="model" value="gpt-oss-120b" list="models" required><datalist id="models"></datalist></div></div>
 <label id="key-label" for="api-key">ARC API key</label><input id="api-key" type="password" autocomplete="off" spellcheck="false" required placeholder="Enter your ARC API key">
 <a href="get-api-keys.png" id="key-help-open" class="key-help" aria-haspopup="dialog" aria-controls="key-help-dialog">Where do I find this?</a>
