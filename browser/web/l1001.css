@@ -7,3 +7,5 @@
 #key-help-image{display:block;width:100%;height:auto}body.key-help-open{overflow:hidden}
 
 @media(min-width:751px){.results{padding-top:16px}}
+
+#settings + .actions{margin-top:0}
