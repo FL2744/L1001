@@ -28,7 +28,7 @@
 })();
 </script>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>L1001 · Translation at Scale</title><link rel="stylesheet" href="l1001.css?v=20260930-startup-scroll-v2"><script src="l1001-config.js" defer></script><script src="l1001.js?v=20261004-reset" defer></script><link rel="icon" href="favicon.ico" type="image/x-icon">
+<title>L1001 · Translation at Scale</title><link rel="stylesheet" href="l1001.css?v=20260930-startup-scroll-v2"><script src="l1001-config.js" defer></script><script src="l1001.js?v=20261004-reset-visibility" defer></script><link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body><main>
 <a class="course-home" href="https://l1001.vt.domains/" aria-label="Return to course home" title="Course home"><img src="l1001-home.svg" alt="L1001 home" width="52" height="52"></a>
@@ -42,7 +42,7 @@
 <div class="pair"><div><label for="source-language">Source language</label><input id="source-language" placeholder="e.g. French" required></div><div><label for="target-language">Target language</label><input id="target-language" value="English" required></div></div>
 <label for="style">Translation style</label><select id="style"><option value="1">Literal</option><option value="2" selected>Faithful and balanced</option><option value="3">Domesticated</option><option value="4">Readable</option><option value="5">Accessible</option><option value="6">Literary</option><option value="7">Academic</option></select>
 </fieldset>
-<div class="actions"><button id="run" disabled>Translate</button><button id="reset" type="button" class="secondary" title="Clear the translation and document; keep provider, model, and API key">Reset</button><button id="stop" type="button" class="secondary" hidden>Stop</button></div>
+<div class="actions"><button id="run" disabled>Translate</button><button id="reset" type="button" hidden class="secondary" title="Clear the translation and document; keep provider, model, and API key">Reset</button><button id="stop" type="button" class="secondary" hidden>Stop</button></div>
 <p class="help privacy">If you are not connected to a Virginia Tech network, you will need to turn on the <a href="https://www.nis.vt.edu/ServicePortfolio/Network/RemoteAccess-VPN.html" target="_blank" rel="noopener noreferrer">Cisco Secure Client VPN</a> before using this tool. Your API key is used only while this page is open and is not saved to browser storage or included in your notebook. The code runs locally in your browser, so your work stays on your own computer.</p>
 <p id="status" role="status">Connecting to JupyterLite…</p><button id="reconnect" type="button" class="secondary" hidden>Reconnect to JupyterLite</button>
 <details id="translation-options"><summary>Translation and annotation options</summary>

@@ -12,10 +12,11 @@
   const send=m=>frame.contentWindow.postMessage({channel,...m},url.origin);
   const modelDefaults={arc:'gpt-oss-120b',openai:'gpt-6-luna'};
   const initialPreview=$('preview').srcdoc, initialSummary=$('result-summary').textContent, initialCheckpointHelp=$('checkpoint-help').textContent;
-  let checkpointRead=0;
+  let checkpointRead=0, resetAvailable=false;
   const hasUnfinishedCheckpoint=()=>!!checkpoint && checkpoint.fragments.length<checkpoint.total;
   function controls() {
     $('run').disabled=!connected || !!active;
+    $('reset').hidden=!resetAvailable || !!active;
     $('reset').disabled=!!active;
     $('run').textContent=hasUnfinishedCheckpoint()?'Resume translation':'Translate';
     $('stop').hidden=!active;$('settings').disabled=!!active;$('advanced-settings').disabled=!!active;
@@ -83,7 +84,7 @@ document.getElementById('key-help-image').addEventListener('error', () => {
   }
   $('reset').addEventListener('click',()=>{
     if(active)return;
-    checkpointRead++;
+    checkpointRead++;resetAvailable=false;
     const connection={provider:$('provider').value,model:$('model').value,key:$('api-key').value};
     HTMLFormElement.prototype.reset.call($('form'));
     $('provider').value=connection.provider;$('model').value=connection.model;$('api-key').value=connection.key;
@@ -143,21 +144,21 @@ document.getElementById('key-help-image').addEventListener('error', () => {
       }
     }
     if(m.type==='done' || m.type==='error') {
-      clearTimeout(recovery);active=null;controls();
+      clearTimeout(recovery);active=null;resetAvailable=true;controls();
       status(m.type==='done'?'Ready.':'Error: '+m.error);
       if(m.type==='error'){$('log').textContent+='\n'+m.error;$('reconnect').hidden=false;}
     }
   });
   $('stop').addEventListener('click',()=>{
     if(!active)return;send({type:'stop',id:active});status('Stopping… Completed chunks remain available.');
-    recovery=setTimeout(()=>{active=null;connected=false;frame.src='about:blank';controls();$('reconnect').hidden=false;status('Translation stopped. Download your checkpoint, then reconnect to resume.');},12000);
+    recovery=setTimeout(()=>{active=null;resetAvailable=true;connected=false;frame.src='about:blank';controls();$('reconnect').hidden=false;status('Translation stopped. Download your checkpoint, then reconnect to resume.');},12000);
   });
   $('form').addEventListener('submit',async event=>{
     event.preventDefault();if(!connected || active)return;
     const file=$('source').files[0];
     if(!file || !/\.(txt|docx|rtf)$/i.test(file.name)){status('Choose a .txt, .docx, or .rtf file.');return;}
     if(file.size>10*1024*1024){status('Choose a file no larger than 10 MB.');return;}
-    const id=crypto.randomUUID();active=id;controls();status('Reading your source document…');
+    const id=crypto.randomUUID();active=id;resetAvailable=false;controls();status('Reading your source document…');
     try {
       let binary='';for(const b of new Uint8Array(await file.arrayBuffer()))binary+=String.fromCharCode(b);
       if(active!==id)return;
@@ -166,7 +167,7 @@ document.getElementById('key-help-image').addEventListener('error', () => {
       $('log').textContent='';
       if(!inputs.checkpoint){$('translation-progress').value=0;if(htmlURL)URL.revokeObjectURL(htmlURL);htmlURL=null;$('download-html').removeAttribute('href');$('download-html').setAttribute('aria-disabled','true');$('preview').srcdoc='';$('result-summary').textContent='Preparing translation…';}
       send({type:'run',id,inputs});inputs.api_key='';
-    } catch(e){active=null;controls();status('Could not read the source document: '+e.message);}
+    } catch(e){active=null;resetAvailable=true;controls();status('Could not read the source document: '+e.message);}
   });
   window.addEventListener('beforeunload',e=>{if(active){e.preventDefault();e.returnValue='';}});
   window.addEventListener('pagehide',()=>{$('api-key').value='';if(active)send({type:'stop',id:active});});
