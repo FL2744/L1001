@@ -1,6 +1,35 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>L1001 · Translation at Scale</title><link rel="stylesheet" href="l1001.css?v=20260930-inline-progress"><script src="l1001-config.js" defer></script><script src="l1001.js?v=20260930-gpt-6-luna" defer></script></head>
+<html lang="en"><head><script>
+// Keep startup focus and restored scroll positions from hiding the logo.
+// Release immediately when the user interacts; normal scrolling then takes over.
+(() => {
+  if (location.hash) return;
+  history.scrollRestoration = 'manual';
+  let holdTop = true;
+  const keepTop = () => {
+    if (holdTop && (window.scrollX || window.scrollY)) {
+      window.scrollTo({left:0, top:0, behavior:'instant'});
+    }
+  };
+  const release = () => {
+    holdTop = false;
+    window.removeEventListener('scroll', keepTop);
+    for (const type of ['wheel','touchstart','pointerdown','keydown']) {
+      window.removeEventListener(type, release, true);
+    }
+  };
+  for (const type of ['wheel','touchstart','pointerdown','keydown']) {
+    window.addEventListener(type, release, {capture:true, passive:true});
+  }
+  window.addEventListener('scroll', keepTop, {passive:true});
+  window.addEventListener('pageshow', keepTop);
+  window.addEventListener('load', keepTop, {once:true});
+  keepTop();
+})();
+</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>L1001 · Translation at Scale</title><link rel="stylesheet" href="l1001.css?v=20260930-startup-scroll-v2"><script src="l1001-config.js" defer></script><script src="l1001.js?v=20261004-reset" defer></script><link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
 <body><main>
 <a class="course-home" href="https://l1001.vt.domains/" aria-label="Return to course home" title="Course home"><img src="l1001-home.svg" alt="L1001 home" width="52" height="52"></a>
 
@@ -13,7 +42,7 @@
 <div class="pair"><div><label for="source-language">Source language</label><input id="source-language" placeholder="e.g. French" required></div><div><label for="target-language">Target language</label><input id="target-language" value="English" required></div></div>
 <label for="style">Translation style</label><select id="style"><option value="1">Literal</option><option value="2" selected>Faithful and balanced</option><option value="3">Domesticated</option><option value="4">Readable</option><option value="5">Accessible</option><option value="6">Literary</option><option value="7">Academic</option></select>
 </fieldset>
-<div class="actions"><button id="run" disabled>Translate</button><button id="stop" type="button" class="secondary" hidden>Stop</button></div>
+<div class="actions"><button id="run" disabled>Translate</button><button id="reset" type="button" class="secondary" title="Clear the translation and document; keep provider, model, and API key">Reset</button><button id="stop" type="button" class="secondary" hidden>Stop</button></div>
 <p class="help privacy">If you are not connected to a Virginia Tech network, you will need to turn on the <a href="https://www.nis.vt.edu/ServicePortfolio/Network/RemoteAccess-VPN.html" target="_blank" rel="noopener noreferrer">Cisco Secure Client VPN</a> before using this tool. Your API key is used only while this page is open and is not saved to browser storage or included in your notebook. The code runs locally in your browser, so your work stays on your own computer.</p>
 <p id="status" role="status">Connecting to JupyterLite…</p><button id="reconnect" type="button" class="secondary" hidden>Reconnect to JupyterLite</button>
 <details id="translation-options"><summary>Translation and annotation options</summary>
@@ -23,7 +52,7 @@
 <label for="source-details">Source context</label><textarea id="source-details" placeholder="Period, dialect, subject, or other source context"></textarea>
 <label for="target-details">Translation guidance</label><textarea id="target-details" placeholder="Audience, terminology, or target-language conventions"></textarea>
 <label for="chunk-chars">Maximum source characters per chunk</label><input id="chunk-chars" type="number" min="1000" max="16000" step="500" value="6000" required><p class="help">Paragraph-aware chunks, measured in characters rather than tokens. Smaller chunks help with model output limits.</p>
-<label class="check"><input id="annotations" type="checkbox"> Add linked entity endnotes</label>
+<label class="check"><input id="annotations" type="checkbox"> Add annotations</label>
 <label for="annotation-scope">What to annotate</label><textarea id="annotation-scope">Named people, places, organizations, works, events, objects, and concepts</textarea>
 <label for="annotation-guidance">Endnote guidance</label><textarea id="annotation-guidance">Use one to three concise sentences per annotation.</textarea></fieldset></details>
 <details id="resume-details"><summary>Resume a saved translation</summary><label for="checkpoint">Upload a checkpoint</label><input id="checkpoint" type="file" accept=".json"><p id="checkpoint-help" class="help">A checkpoint restores the translation settings and completed chunks. Select the original source file and enter your API key again.</p><button id="clear-checkpoint" class="secondary" type="button" disabled>Clear checkpoint</button></details>
@@ -32,7 +61,7 @@
 <div class="actions downloads"><a id="download-html" aria-disabled="true">Download HTML</a><a id="download-checkpoint" aria-disabled="true">Download checkpoint</a></div>
 </section></div></form>
 <details><summary>Notebook output</summary><pre id="log" tabindex="0" aria-label="Notebook output"></pre></details>
-<details><summary>Advanced: Show JupyterLite</summary><p class="help">The notebook runs in a temporary Python session. Inputs and API keys are not saved in notebook cells.</p><div class="jupyter-window"><iframe id="jupyter" title="JupyterLite workspace" allow="cross-origin-isolated"></iframe></div><p><a href="https://github.com/FL2744/L1001" target="_blank" rel="noopener noreferrer">Notebook and source on GitHub</a></p></details>
+<details><summary>Advanced: Show JupyterLite</summary><p class="help">The notebook runs in a temporary Python session. Inputs and API keys are not saved in notebook cells.</p><div class="jupyter-window"><iframe inert id="jupyter" title="JupyterLite workspace" allow="cross-origin-isolated"></iframe></div><p><a href="https://github.com/FL2744/L1001" target="_blank" rel="noopener noreferrer">Notebook and source on GitHub</a></p></details>
 <noscript>Enable JavaScript to use L1001.</noscript></main><dialog id="key-help-dialog" aria-labelledby="key-help-title">
 <div class="key-help-header"><h2 id="key-help-title">Where to find your ARC API key</h2><button type="button" id="key-help-close" autofocus>Close</button></div>
 <img id="key-help-image" src="get-api-keys.png" alt="Step-by-step graphic showing where to find your ARC API key" loading="lazy">

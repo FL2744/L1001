@@ -2,13 +2,21 @@
   'use strict';
   const $=id=>document.getElementById(id), channel='l1001-bridge-v1';
   const url=new URL(window.L1001_CONFIG.jupyterURL), frame=$('jupyter');
+  // Keep the background notebook from taking focus while Advanced is closed.
+  const notebookDetails=frame.closest('details');
+  function syncNotebookFocus(){frame.inert=!notebookDetails.open;}
+  notebookDetails.addEventListener('toggle',syncNotebookFocus);
+  syncNotebookFocus();
   let connected=false, active=null, handshake='', ping, slow, recovery, checkpoint=null, htmlURL=null, checkpointURL=null;
   const status=text=>{$('status').textContent=text;};
   const send=m=>frame.contentWindow.postMessage({channel,...m},url.origin);
   const modelDefaults={arc:'gpt-oss-120b',openai:'gpt-6-luna'};
+  const initialPreview=$('preview').srcdoc, initialSummary=$('result-summary').textContent, initialCheckpointHelp=$('checkpoint-help').textContent;
+  let checkpointRead=0;
   const hasUnfinishedCheckpoint=()=>!!checkpoint && checkpoint.fragments.length<checkpoint.total;
   function controls() {
     $('run').disabled=!connected || !!active;
+    $('reset').disabled=!!active;
     $('run').textContent=hasUnfinishedCheckpoint()?'Resume translation':'Translate';
     $('stop').hidden=!active;$('settings').disabled=!!active;$('advanced-settings').disabled=!!active;
     $('checkpoint').disabled=!!active;$('clear-checkpoint').disabled=!!active || !checkpoint;
@@ -73,13 +81,33 @@ document.getElementById('key-help-image').addEventListener('error', () => {
     $('download-checkpoint').removeAttribute('href');$('download-checkpoint').setAttribute('aria-disabled','true');
     $('checkpoint').value='';$('checkpoint-help').textContent='Choose the original source file and enter your API key to resume a checkpoint.';controls();
   }
+  $('reset').addEventListener('click',()=>{
+    if(active)return;
+    checkpointRead++;
+    const connection={provider:$('provider').value,model:$('model').value,key:$('api-key').value};
+    HTMLFormElement.prototype.reset.call($('form'));
+    $('provider').value=connection.provider;$('model').value=connection.model;$('api-key').value=connection.key;
+    providerChanged(false);
+    clearCheckpoint();
+    if(htmlURL)URL.revokeObjectURL(htmlURL);htmlURL=null;
+    for(const id of ['download-html','download-checkpoint']){
+      $(id).removeAttribute('href');$(id).removeAttribute('download');$(id).setAttribute('aria-disabled','true');
+    }
+    $('translation-progress').max=1;$('translation-progress').value=0;
+    $('preview').srcdoc=initialPreview;$('result-summary').textContent=initialSummary;
+    $('checkpoint-help').textContent=initialCheckpointHelp;$('log').textContent='';
+    if(connected){status('Ready.');$('reconnect').hidden=true;}
+    controls();
+  });
   $('clear-checkpoint').addEventListener('click',()=>{clearCheckpoint();status('Checkpoint cleared. The next run starts a new translation.');});
   $('source').addEventListener('change',()=>{if(!$('title').value && $('source').files[0])$('title').value=$('source').files[0].name.replace(/\.[^.]+$/,'');});
   $('checkpoint').addEventListener('change',async()=>{
+    const read=++checkpointRead;
     try {
       const file=$('checkpoint').files[0];if(!file)return;
       if(file.size>30*1024*1024)throw Error('Checkpoint must be 30 MB or smaller.');
-      const value=JSON.parse(await file.text()), s=value.settings;
+      const text=await file.text();if(read!==checkpointRead)return;
+      const value=JSON.parse(text), s=value.settings;
       if(value.version!==1 || !s?.metadata || !Array.isArray(value.fragments) || !['arc','openai'].includes(s.provider) || !Number.isInteger(value.total) || value.fragments.length>value.total)throw Error('This is not an L1001 browser checkpoint.');
       $('provider').value=s.provider;providerChanged();$('model').value=s.model;
       for(const k of ['title','author','source_language','source_details','target_language','target_details']) $(k.replaceAll('_','-')).value=String(s.metadata[k] || '');
@@ -87,7 +115,7 @@ document.getElementById('key-help-image').addEventListener('error', () => {
       $('annotation-scope').value=s.annotation_scope;$('annotation-guidance').value=s.annotation_guidance;
       setCheckpoint(value);$('checkpoint-help').textContent=`Restored ${value.fragments.length} of ${value.total} chunks. Select the original file (${value.source_name}) and enter your API key.`;
       status('Checkpoint loaded. Settings restored; select the original source document.');
-    } catch(e){status('Could not load checkpoint: '+e.message);$('checkpoint').value='';}
+    } catch(e){if(read!==checkpointRead)return;status('Could not load checkpoint: '+e.message);$('checkpoint').value='';}
   });
   function connect() {
     if(active)return;

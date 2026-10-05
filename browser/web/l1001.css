@@ -14,3 +14,11 @@
 main{position:relative}.course-home{position:absolute;top:40px;right:32px;width:64px;z-index:1}@media(max-width:750px){.course-home{top:34px;right:16px}.site-logo{padding-right:84px}}
 
 .translation-summary{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:14px 0}.translation-summary #result-summary{margin:0;min-width:0}#translation-progress{display:block;flex:0 0 auto;width:110px;max-width:28%;height:6px;margin:0;border:0;border-radius:3px;overflow:hidden;appearance:none;background:#dce3ed;accent-color:#2459c4}#translation-progress::-webkit-progress-bar{background:#dce3ed;border-radius:3px}#translation-progress::-webkit-progress-value{background:#2459c4;border-radius:3px}#translation-progress::-moz-progress-bar{background:#2459c4;border-radius:3px}
+#annotations{transform:translateY(-1px)}
+.site-logo img{transform:translateX(-11.095764%)}
+.help.privacy{margin-bottom:0}.privacy + #status{margin-top:10px}
+#translation-options #annotation-guidance,#resume-details > :last-child,#log{display:block;margin-bottom:0}
+.site-logo{margin-top:0}.course-home{top:24px}@media(max-width:750px){.course-home{top:18px}}
+#translation-options[open] + #resume-details{margin-top:14px}
+#advanced-settings #chunk-chars + .help{margin-bottom:14px}#advanced-settings .check{margin-bottom:14px}
+main{overflow-anchor:none}
