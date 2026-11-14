@@ -103,3 +103,6 @@ This project was created with assistance from GPT-6 Astra and Codex. AI tools as
 
 10. Maja Popović (2015). [chrF: character n-gram F-score for automatic MT evaluation](https://doi.org/10.18653/v1/W15-3049). Proceedings of the Tenth Workshop on Statistical Machine Translation. DOI: 10.18653/v1/W15-3049.
 
+## Suggested Citation
+
+William Taggart. 2026. L1001: Stateful Long-Document Translation in a Browser and Command Line. Technical report. Modern and Classical Languages and Literatures, Virginia Tech. https://github.com/FL2744/L1001
