@@ -37,6 +37,12 @@ Karpinska and Iyyer found that document-level context can improve literary trans
 \label{fig:1}
 \end{figure}
 
+\subsection{Research context}
+
+Document-level translation research shows why individually plausible sentences can become inconsistent when read together: deixis, ellipsis, and lexical cohesion require context-sensitive evaluation \cite{context}. Wang and colleagues examine document-level translation with large language models and context-aware prompts \cite{docmt}. These studies motivate retaining discourse information across translation segments, while leaving open whether a particular summary, glossary, or checkpoint preserves the information needed for a given passage.
+
+Lost in the Middle finds position-dependent failures in long-context use \cite{lost}, and LongBench evaluates long-context understanding across multiple tasks and languages \cite{longbench}. They provide reasons to test context selection rather than equating a larger input window with reliable long-document translation. Evaluation should also distinguish different signals: BLEU compares modified n-gram precision with reference translations \cite{bleu}, while chrF uses character n-gram precision and recall \cite{chrf}. These metrics complement the report's existing discussion of learned evaluation and literary errors; none alone verifies discourse consistency, stylistic appropriateness, or the preservation of a long text's argument. Human review and targeted cross-segment tests remain necessary evaluation components.
+
 \section{Two implementations and execution locations}
 
 The repository contains a Python command-line translator and a separately maintained browser adapter. Their goals overlap, but their chunking units and checkpoint formats differ. Changes to the root command-line script do not automatically update the browser implementation. A reproducible run therefore needs the implementation identity as well as its settings and source document.

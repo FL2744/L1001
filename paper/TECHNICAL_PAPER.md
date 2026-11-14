@@ -20,6 +20,12 @@ Karpinska and Iyyer found that document-level context can improve literary trans
 
 *Figure 1. The browser workspace before translation: provider, source document, language, style, preview, and download controls.*
 
+### Research context
+
+Document-level translation research shows why individually plausible sentences can become inconsistent when read together: deixis, ellipsis, and lexical cohesion require context-sensitive evaluation [When a Good Translation is Wrong in Context: Context-Aware Machine Translation Improves on Deixis, Ellipsis, and Lexical Cohesion](https://doi.org/10.18653/v1/P19-1116). Wang and colleagues examine document-level translation with large language models and context-aware prompts [Document-Level Machine Translation with Large Language Models](https://arxiv.org/abs/2304.02210). These studies motivate retaining discourse information across translation segments, while leaving open whether a particular summary, glossary, or checkpoint preserves the information needed for a given passage.
+
+Lost in the Middle finds position-dependent failures in long-context use [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172), and LongBench evaluates long-context understanding across multiple tasks and languages [LongBench: A Bilingual, Multitask Benchmark for Long Context Understanding](https://arxiv.org/abs/2308.14508). They provide reasons to test context selection rather than equating a larger input window with reliable long-document translation. Evaluation should also distinguish different signals: BLEU compares modified n-gram precision with reference translations [Bleu: a Method for Automatic Evaluation of Machine Translation](https://doi.org/10.3115/1073083.1073135), while chrF uses character n-gram precision and recall [chrF: character n-gram F-score for automatic MT evaluation](https://doi.org/10.18653/v1/W15-3049). These metrics complement the report's existing discussion of learned evaluation and literary errors; none alone verifies discourse consistency, stylistic appropriateness, or the preservation of a long text's argument. Human review and targeted cross-segment tests remain necessary evaluation components.
+
 ## Two implementations and execution locations
 
 The repository contains a Python command-line translator and a separately maintained browser adapter. Their goals overlap, but their chunking units and checkpoint formats differ. Changes to the root command-line script do not automatically update the browser implementation. A reproducible run therefore needs the implementation identity as well as its settings and source document.
@@ -87,4 +93,15 @@ This project was created with assistance from GPT-6 Astra and Codex. AI tools as
 3. Ricardo Rei, Craig Stewart, Ana C. Farinha, Alon Lavie (2020). [COMET: A Neural Framework for MT Evaluation](https://aclanthology.org/2020.emnlp-main.213/). Proceedings of EMNLP; doi:10.18653/v1/2020.emnlp-main.213.
 
 4. Project Jupyter (2026). [Communication between a host page and a JupyterLite instance running in an IFrame](https://jupyterlite.readthedocs.io/en/stable/howto/configure/advanced/iframe.html). JupyterLite documentation, accessed November 14, 2026.
+5. Elena Voita, Rico Sennrich, Ivan Titov (2019). [When a Good Translation is Wrong in Context: Context-Aware Machine Translation Improves on Deixis, Ellipsis, and Lexical Cohesion](https://doi.org/10.18653/v1/P19-1116). Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics. DOI: 10.18653/v1/P19-1116.
+
+6. Wang, Longyue, Lyu, Chenyang, Ji, Tianbo, Zhang, Zhirui, Yu, Dian, Shi, Shuming, Tu, Zhaopeng (2023). [Document-Level Machine Translation with Large Language Models](https://arxiv.org/abs/2304.02210). DOI: 10.48550/arXiv.2304.02210.
+
+7. Liu, Nelson F., Lin, Kevin, Hewitt, John, Paranjape, Ashwin, Bevilacqua, Michele, Petroni, Fabio, Liang, Percy (2023). [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172). DOI: 10.48550/arXiv.2307.03172.
+
+8. Bai, Yushi, Lv, Xin, Zhang, Jiajie, Lyu, Hongchang, Tang, Jiankai, Huang, Zhidian, Du, Zhengxiao, Liu, Xiao, Zeng, Aohan, Hou, Lei, Dong, Yuxiao, Tang, Jie, Li, Juanzi (2023). [LongBench: A Bilingual, Multitask Benchmark for Long Context Understanding](https://arxiv.org/abs/2308.14508). DOI: 10.48550/arXiv.2308.14508.
+
+9. Kishore Papineni, Salim Roukos, Todd Ward, Wei-Jing Zhu (2002). [Bleu: a Method for Automatic Evaluation of Machine Translation](https://doi.org/10.3115/1073083.1073135). Proceedings of the 40th Annual Meeting of the Association for Computational Linguistics. DOI: 10.3115/1073083.1073135.
+
+10. Maja Popović (2015). [chrF: character n-gram F-score for automatic MT evaluation](https://doi.org/10.18653/v1/W15-3049). Proceedings of the Tenth Workshop on Statistical Machine Translation. DOI: 10.18653/v1/W15-3049.
 
