@@ -24,11 +24,11 @@ L1001 translates long documents through sequential language-model requests while
 \end{abstract}
 \keywords{document translation, JupyterLite, continuity, checkpoints, annotation}
 \maketitle
-\section{Motivation and related research}
+\section{Purpose and Research Context}
 
-Translating a long work requires decisions that persist across paragraphs: names, register, tense, terminology, and the interpretation of repeated references. L1001 divides the source into manageable requests while explicitly carrying a limited record of previous decisions. It produces a standalone HTML translation and can optionally attach globally reconciled endnotes to named entities and concepts.
+Long-document translation depends on decisions that persist across paragraphs: names, register, tense, terminology, and repeated references. L1001 divides a source into manageable model requests while carrying a limited record of earlier decisions forward. It produces a standalone HTML translation and can attach globally reconciled endnotes to named entities and concepts. Its purpose is to support continuity across a work while exposing the limits of the context retained between requests.
 
-Karpinska and Iyyer found that document-level context can improve literary translation while important errors persist \cite{literary}. Their findings motivate continuity support, but they do not establish L1001's translation quality. Voita, Sennrich, and Titov study monolingual document repair as a way to improve contextual consistency \cite{docrepair}; L1001 instead supplies continuity during sequential generation. COMET provides a learned translation-evaluation framework \cite{comet}. It is relevant to a future evaluation alongside bilingual human review, but L1001 does not presently turn an automatic quality score into a guarantee of fidelity.
+Document-level translation research explains why that continuity matters. Voita, Sennrich, and Titov show that locally plausible translations can fail on deixis, ellipsis, and lexical cohesion \cite{context}, and investigate monolingual document repair as a route to contextual consistency \cite{docrepair}. Karpinska and Iyyer find benefits from document-level context in literary translation while documenting persistent errors \cite{literary}. Wang and colleagues examine context-aware prompting for document translation with large language models \cite{docmt}. L1001 addresses these concerns during sequential generation, using continuity information rather than treating independently translated segments as a finished document.
 
 \begin{figure}[!htb]\centering
 \includegraphics[width=.96\linewidth,height=.24\textheight,keepaspectratio]{figures/screenshot-01.png}
@@ -37,11 +37,9 @@ Karpinska and Iyyer found that document-level context can improve literary trans
 \label{fig:1}
 \end{figure}
 
-\subsection{Research context}
+The usefulness of that information depends on what the model can recover from it. Lost in the Middle finds position-dependent failures in long-context use \cite{lost}, and LongBench evaluates long-context understanding across tasks and languages \cite{longbench}. Their relevance is methodological: increasing the input window does not establish that a glossary, summary, or checkpoint preserves the discourse information needed by a particular passage. The implementation therefore needs tests that follow references and translation decisions across segment boundaries, alongside review of individual passages.
 
-Document-level translation research shows why individually plausible sentences can become inconsistent when read together: deixis, ellipsis, and lexical cohesion require context-sensitive evaluation \cite{context}. Wang and colleagues examine document-level translation with large language models and context-aware prompts \cite{docmt}. These studies motivate retaining discourse information across translation segments, while leaving open whether a particular summary, glossary, or checkpoint preserves the information needed for a given passage.
-
-Lost in the Middle finds position-dependent failures in long-context use \cite{lost}, and LongBench evaluates long-context understanding across multiple tasks and languages \cite{longbench}. They provide reasons to test context selection rather than equating a larger input window with reliable long-document translation. Evaluation should also distinguish different signals: BLEU compares modified n-gram precision with reference translations \cite{bleu}, while chrF uses character n-gram precision and recall \cite{chrf}. These metrics complement the report's existing discussion of learned evaluation and literary errors; none alone verifies discourse consistency, stylistic appropriateness, or the preservation of a long text's argument. Human review and targeted cross-segment tests remain necessary evaluation components.
+Evaluation must also distinguish complementary signals of quality. BLEU compares modified n-gram precision against reference translations \cite{bleu}, chrF uses character n-gram precision and recall \cite{chrf}, and COMET provides a learned evaluation framework \cite{comet}. These offer potential components of an assessment, but none alone verifies literary register, cross-segment coherence, or preservation of an argument. This report describes the browser and command-line workflows, their continuity and recovery mechanisms, and their operational limits. Translation quality remains a question for bilingual human review and targeted document-level evaluation, rather than a consequence of successful generation or export.
 
 \section{Two implementations and execution locations}
 
