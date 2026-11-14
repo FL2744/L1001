@@ -1,0 +1,57 @@
+[
+  {
+    "file": "figures/screenshot-01.png",
+    "capture": "l1001-01.jpg",
+    "crop": [
+      20,
+      20,
+      1240,
+      1015
+    ],
+    "caption": "The browser workspace before translation: provider, source document, language, style, preview, and download controls."
+  },
+  {
+    "file": "figures/screenshot-02.png",
+    "capture": "l1001-02.jpg",
+    "crop": [
+      20,
+      1020,
+      625,
+      1480
+    ],
+    "caption": "Work metadata and translation guidance accompany every chunk."
+  },
+  {
+    "file": "figures/screenshot-03.png",
+    "capture": "l1001-02.jpg",
+    "crop": [
+      20,
+      1510,
+      625,
+      2010
+    ],
+    "caption": "Character-based chunk sizing and optional entity-annotation controls."
+  },
+  {
+    "file": "figures/screenshot-04.png",
+    "capture": "l1001-03.jpg",
+    "crop": [
+      20,
+      2010,
+      625,
+      2275
+    ],
+    "caption": "Checkpoint recovery requires the original source document and a newly entered API key."
+  },
+  {
+    "file": "figures/screenshot-05.png",
+    "capture": "l1001-05.jpg",
+    "crop": [
+      20,
+      2540,
+      1240,
+      3240
+    ],
+    "caption": "The embedded JupyterLite workspace runs browser-side Python in a temporary kernel."
+  }
+]

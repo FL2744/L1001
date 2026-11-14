@@ -1,5 +1,8 @@
 ![L1001 logo](L1001-visual.png)
 
+Technical paper: [PDF](paper/Technical-Paper.pdf) · [LaTeX](paper/main.tex) · [Markdown](paper/TECHNICAL_PAPER.md) · [Source bundle](paper/Technical-Paper-Source.zip)
+
+
 # L1001: Translation at Scale
 
 `L1001.py` translates long `.txt`, `.rtf`, or `.docx` works and
