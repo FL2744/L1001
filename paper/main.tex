@@ -31,7 +31,7 @@ Translating a long work requires decisions that persist across paragraphs: names
 Karpinska and Iyyer found that document-level context can improve literary translation while important errors persist \cite{literary}. Their findings motivate continuity support, but they do not establish L1001's translation quality. Voita, Sennrich, and Titov study monolingual document repair as a way to improve contextual consistency \cite{docrepair}; L1001 instead supplies continuity during sequential generation. COMET provides a learned translation-evaluation framework \cite{comet}. It is relevant to a future evaluation alongside bilingual human review, but L1001 does not presently turn an automatic quality score into a guarantee of fidelity.
 
 \begin{figure}[!htb]\centering
-\includegraphics[width=.96\linewidth,height=.35\textheight,keepaspectratio]{figures/screenshot-01.png}
+\includegraphics[width=.96\linewidth,height=.24\textheight,keepaspectratio]{figures/screenshot-01.png}
 \caption{The browser workspace before translation: provider, source document, language, style, preview, and download controls.}
 \Description{The browser workspace before translation: provider, source document, language, style, preview, and download controls.}
 \label{fig:1}
@@ -53,21 +53,7 @@ Work title, author, source context, and translation guidance accompany the task.
 
 The browser defaults to a maximum of 6,000 source characters per chunk and permits 1,000 to 16,000. Its segmentation is paragraph-aware and character-based. The command-line implementation uses token-based budgeting with tiktoken. A character limit is neither an output-token allowance nor a model-context guarantee, particularly across languages with different tokenization patterns.
 
-\begin{figure}[!htb]\centering
-\begin{minipage}[t]{.48\linewidth}\centering
-\includegraphics[width=\linewidth,height=.35\textheight,keepaspectratio]{figures/screenshot-02.png}
-\caption{Work metadata and translation guidance accompany every chunk.}
-\Description{Work metadata and translation guidance accompany every chunk.}
-\label{fig:2}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{.48\linewidth}\centering
-\includegraphics[width=\linewidth,height=.35\textheight,keepaspectratio]{figures/screenshot-03.png}
-\caption{Character-based chunk sizing and optional entity-annotation controls.}
-\Description{Character-based chunk sizing and optional entity-annotation controls.}
-\label{fig:3}
-\end{minipage}
-\end{figure}
+
 
 \section{Structured translation and annotations}
 
@@ -81,12 +67,7 @@ The browser adapter supports OpenAI Responses with structured output and ARC's s
 
 Temporary network, service, and malformed-response failures can trigger up to six attempts, with retry guidance honored when exposed by the provider. Authentication and oversized-request failures require corrective action rather than repeating the same request indefinitely. If an output budget is exhausted, reducing source chunk size is more meaningful than treating a partial response as a complete translation. Retry behavior can incur additional usage.
 
-\begin{figure}[!htb]\centering
-\includegraphics[width=.96\linewidth,height=.35\textheight,keepaspectratio]{figures/screenshot-04.png}
-\caption{Checkpoint recovery requires the original source document and a newly entered API key.}
-\Description{Checkpoint recovery requires the original source document and a newly entered API key.}
-\label{fig:4}
-\end{figure}
+
 
 After a completed chunk, the preview and recoverable state are updated. A downloaded checkpoint stores translated content, settings, registry, and continuity information, while omitting the API key and original source. Resume requires the original source document and a newly supplied key. Source and settings checks use SHA-256-based verification to prevent an accidental continuation with a different work or configuration. Browser checkpoints are not interchangeable with command-line checkpoints.
 
@@ -97,7 +78,7 @@ The user must download a checkpoint before closing the page to preserve that rec
 An advanced panel exposes the embedded JupyterLite workspace for inspection. The normal translation controls remain the primary interface; users need not manually execute notebook cells. The deployment separates the host page from the runtime site, so both the published adapter and bridge configuration must be updated coherently. Runtime and package caching may occur in the browser even though form inputs are not deliberately stored as notebook cells or application database records.
 
 \begin{figure}[!htb]\centering
-\includegraphics[width=.96\linewidth,height=.35\textheight,keepaspectratio]{figures/screenshot-05.png}
+\includegraphics[width=.96\linewidth,height=.24\textheight,keepaspectratio]{figures/screenshot-05.png}
 \caption{The embedded JupyterLite workspace runs browser-side Python in a temporary kernel.}
 \Description{The embedded JupyterLite workspace runs browser-side Python in a temporary kernel.}
 \label{fig:5}
@@ -107,7 +88,7 @@ The browser keeps extraction and orchestration local, but the chosen provider re
 
 \section{Evidence and limitations}
 
-This report describes inspected code and the opened browser interface. The figures show configuration, recovery, and runtime panels before a translation, not benchmark outputs. Repository fixtures and mocked-provider tests exercise selected parsing and control paths; they are not evidence that a particular model preserves literary meaning. No new bilingual study or throughput measurement is claimed.
+This report describes inspected code and the opened browser interface. The figures show the initial translation workspace and the embedded notebook interface, not benchmark outputs. Repository fixtures and mocked-provider tests exercise selected parsing and control paths; they are not evidence that a particular model preserves literary meaning. No new bilingual study or throughput measurement is claimed.
 
 A useful evaluation should separate sentence accuracy, long-range consistency, entity-note correctness, style, formatting retention, and interruption recovery. It should also compare browser and command-line settings using their actual segmentation units. Limited context, uncertain annotations, unsupported source layout, provider changes, and propagated continuity errors remain practical constraints requiring human review.
 

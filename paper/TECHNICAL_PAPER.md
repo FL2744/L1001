@@ -32,17 +32,13 @@ The web interface embeds a JupyterLite deployment that runs Python in the browse
 
 The input formats are TXT, RTF, and DOCX. Text decoding handles UTF-8, UTF-16 with a byte-order mark, and a Windows-1252 fallback. DOCX extraction retains ordinary body text and selected heading, bold, and italic information, while tables are flattened. Images, comments, footnotes, and complex page layout are outside the supported import model. RTF extraction removes its control syntax. Browser safeguards limit uploads to 10 MB, extracted text to two million characters, and expanded DOCX XML to 20 MB.
 
-![Work metadata and translation guidance accompany every chunk.](figures/screenshot-02.png)
 
-*Figure 2. Work metadata and translation guidance accompany every chunk.*
 
 Work title, author, source context, and translation guidance accompany the task. Each request also receives a limited tail of previous source text, previous translation, and continuity notes. Conceptually, request i uses the current source chunk and state from request i-1; its returned translation and updated notes become the next state. This avoids resending the entire work while allowing selected decisions to persist. It also introduces dependence on earlier errors: an incorrect continuity note can propagate.
 
 The browser defaults to a maximum of 6,000 source characters per chunk and permits 1,000 to 16,000. Its segmentation is paragraph-aware and character-based. The command-line implementation uses token-based budgeting with tiktoken. A character limit is neither an output-token allowance nor a model-context guarantee, particularly across languages with different tokenization patterns.
 
-![Character-based chunk sizing and optional entity-annotation controls.](figures/screenshot-03.png)
 
-*Figure 3. Character-based chunk sizing and optional entity-annotation controls.*
 
 ## Structured translation and annotations
 
@@ -56,9 +52,7 @@ The browser adapter supports OpenAI Responses with structured output and ARC's s
 
 Temporary network, service, and malformed-response failures can trigger up to six attempts, with retry guidance honored when exposed by the provider. Authentication and oversized-request failures require corrective action rather than repeating the same request indefinitely. If an output budget is exhausted, reducing source chunk size is more meaningful than treating a partial response as a complete translation. Retry behavior can incur additional usage.
 
-![Checkpoint recovery requires the original source document and a newly entered API key.](figures/screenshot-04.png)
 
-*Figure 4. Checkpoint recovery requires the original source document and a newly entered API key.*
 
 After a completed chunk, the preview and recoverable state are updated. A downloaded checkpoint stores translated content, settings, registry, and continuity information, while omitting the API key and original source. Resume requires the original source document and a newly supplied key. Source and settings checks use SHA-256-based verification to prevent an accidental continuation with a different work or configuration. Browser checkpoints are not interchangeable with command-line checkpoints.
 
@@ -70,13 +64,13 @@ An advanced panel exposes the embedded JupyterLite workspace for inspection. The
 
 ![The embedded JupyterLite workspace runs browser-side Python in a temporary kernel.](figures/screenshot-05.png)
 
-*Figure 5. The embedded JupyterLite workspace runs browser-side Python in a temporary kernel.*
+*Figure 2. The embedded JupyterLite workspace runs browser-side Python in a temporary kernel.*
 
 The browser keeps extraction and orchestration local, but the chosen provider receives source chunks and continuity context. It would therefore be inaccurate to describe the entire workflow as local or offline translation. The command-line path additionally requires a compatible Python environment and its documented packages. Both routes require authorized provider access for inference.
 
 ## Evidence and limitations
 
-This report describes inspected code and the opened browser interface. The figures show configuration, recovery, and runtime panels before a translation, not benchmark outputs. Repository fixtures and mocked-provider tests exercise selected parsing and control paths; they are not evidence that a particular model preserves literary meaning. No new bilingual study or throughput measurement is claimed.
+This report describes inspected code and the opened browser interface. The figures show the initial translation workspace and the embedded notebook interface, not benchmark outputs. Repository fixtures and mocked-provider tests exercise selected parsing and control paths; they are not evidence that a particular model preserves literary meaning. No new bilingual study or throughput measurement is claimed.
 
 A useful evaluation should separate sentence accuracy, long-range consistency, entity-note correctness, style, formatting retention, and interruption recovery. It should also compare browser and command-line settings using their actual segmentation units. Limited context, uncertain annotations, unsupported source layout, provider changes, and propagated continuity errors remain practical constraints requiring human review.
 
