@@ -1,6 +1,10 @@
 ![L1001 logo](L1001-visual.png)
 
+<div align="left">
+
 Technical paper: [PDF](paper/Technical-Paper.pdf) · [LaTeX](paper/main.tex) · [Markdown](paper/TECHNICAL_PAPER.md) · [Source bundle](paper/Technical-Paper-Source.zip)
+
+</div>
 
 
 # L1001: Translation at Scale
